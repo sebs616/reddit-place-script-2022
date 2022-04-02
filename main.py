@@ -106,7 +106,15 @@ class PlaceClient:
 
     def load_image(self):
         # Read and load the image to draw and get its dimensions
-        im = Image.open(os.path.join(os.path.abspath(os.getcwd()), "image.jpg"))
+        try:
+            im = Image.open(os.path.join(os.path.abspath(os.getcwd()), "image.jpg"))
+        except:
+            print("No image.jpg found, trying to find an image.png")
+            try:
+                im = Image.open(os.path.join(os.path.abspath(os.getcwd()), "image.png"))
+            except:
+                print("Image not found, exiting execution")
+                exit()
         self.pix = im.load()
         logging.info(f"Loaded image size: {im.size}")
         self.image_size = im.size
